@@ -92,6 +92,7 @@
     <Compile Include="AuthManager.cs" />
     <Compile Include="AuthorizationData.cs" />
     <Compile Include="AuthorizationException.cs" />
+    <Compile Include="CodeModel.cs" />
     <Compile Include="DbManager.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="Form1.cs">
@@ -100,6 +101,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="InvalidCodeException.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="PortManager.cs" />
     <Compile Include="Program.cs" />
