@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace RFID
 {
@@ -15,11 +16,22 @@ namespace RFID
         public void Authorize(string[] buffer)
         {
             AuthorizationData authData = DecodeCode(buffer);
+            
+            CodeModel code = null;
+            code = _instance.GetDbManager().GetExactCode(authData.code);
+            if (code == null) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
+            if (!code.valid) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
+            
             Debug.WriteLine(authData.code);
         }
 
         public void Authorize(AuthorizationData authData)
         {
+            CodeModel code = null;
+            code = _instance.GetDbManager().GetExactCode(authData.code);
+            if (code == null) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
+            if (!code.valid) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
+
             Debug.WriteLine(authData.code);
         }
         
