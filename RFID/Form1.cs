@@ -9,6 +9,7 @@ namespace RFID
         private EventManager _eventManager;
         private PortManager _portManager;
         private DbManager _dbManager;
+        private TestManager _testManager;
         private System.Timers.Timer mainCycle;
 
 
@@ -18,6 +19,7 @@ namespace RFID
             _eventManager = new EventManager(this);
             _portManager = new PortManager(this);
             _dbManager = new DbManager(this);
+            _testManager = new TestManager(this);
 
             InitializeComponent();
 
@@ -35,6 +37,7 @@ namespace RFID
         public EventManager GetEventManager() => _eventManager;
         public PortManager GetPortManager() => _portManager;
         public DbManager GetDbManager() => _dbManager;
+        public TestManager GetTestManager() => _testManager;
         public void PauseTimer() => mainCycle.Stop();
         public void ResumeTimer() => mainCycle.Start();
     }
