@@ -2,7 +2,7 @@
 {
     public class UserModel
     {
-        private int user_id { get; set; }
-        private string username { get; set; }
+        public int user_id { get; set; }
+        public string username { get; set; }
     }
 }
