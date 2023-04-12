@@ -5,12 +5,13 @@ namespace RFID
     public class DbManager
     {
         private Form1 _instance;
-        private string _dbPath = @"URI=file:C:\Users\bulka.ondrej3\source\repos\RFID\RFID\rfid.db"; // Path to database
+        private string _dbPath;
         private SQLiteConnection _connection;
 
         public DbManager(Form1 instance)
         {
             _instance = instance;
+            _dbPath = @"URI=file:" + System.IO.Directory.GetCurrentDirectory()  + @"\rfid.db"; // Path to database
         }
 
         public void Init() => _connection = new SQLiteConnection(_dbPath); // Initialize connection
