@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="InvalidCodeException.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="LogType.cs" />
     <Compile Include="PortManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
