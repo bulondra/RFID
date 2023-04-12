@@ -5,7 +5,7 @@ namespace RFID
     class AuthorizationException : Exception
     {
         public AuthorizationException()
-            : base("Authorization unsuccessful!")
+            : base("Authorization failed!")
         {}
     }
 }
