@@ -26,6 +26,11 @@ B7924124
             AuthorizationData authData = DecodeCode(buffer);
             Debug.WriteLine(authData.code);
         }
+
+        public void Authorize(AuthorizationData authData)
+        {
+            Debug.WriteLine(authData.code);
+        }
         
         public AuthorizationData DecodeCode(string[] buffer)
         {
