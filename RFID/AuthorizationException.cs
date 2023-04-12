@@ -6,8 +6,6 @@ namespace RFID
     {
         public AuthorizationException()
             : base("Authorization unsuccessful!")
-        {
-
-        }
+        {}
     }
 }

@@ -7,15 +7,6 @@ namespace RFID
     {
         private Form1 _instance;
 
-        /*
-CODES:
-0585DF14
-57192BFA
-A56B691A
-B7924124
-2BFF628A
-        */
-
         public AuthManager(Form1 instance)
         {
             _instance = instance;
@@ -34,40 +25,39 @@ B7924124
         
         public AuthorizationData DecodeCode(string[] buffer)
         {
-            Location loc = Location.NIC;
-            string code = "";
-            if (buffer[0].Equals("2") && buffer[1].Equals("4"))
+            Location loc = Location.NIC; // Init default values
+            string code = ""; // Init default values
+            
+            if (buffer[0].Equals("2") && buffer[1].Equals("4")) // If packet has elements of numpad
             {
-                if (buffer.Length > 10)
+                if (buffer.Length > 10) // If packet has more than 10 bytes (element of numpad)
                 {
-                    loc = Location.CISELNIK;
-                    for (int i = 2; i < 10; i++)
+                    loc = Location.CISELNIK; // Set location to numpad
+                    
+                    for (int i = 2; i < 10; i++) // Parse code from packet
                     {
                         code += (char)Convert.ToUInt32(buffer[i], 16);
                     }
-                } else
+                } else // Else (element of numpad reader)
                 {
-                    loc = Location.CTECKA_CISELNIKU;
-                    for (int i = 2; i < 6; i++)
+                    loc = Location.CTECKA_CISELNIKU; // Set location to numpad reader
+                    
+                    for (int i = 2; i < 6; i++) // Parse code from packet
                     {
                         code += (char)Convert.ToUInt32(buffer[i], 16);
                     }
                 }
-            } else
+            } else // Else (element of normal reader)
             {
-                loc = Location.CTECKA;
-                for (int i = 1; i < 9; i++)
+                loc = Location.CTECKA; // Set location to normal reader
+                
+                for (int i = 1; i < 9; i++) // Parse code from packet
                 {
                     code += (char)Convert.ToUInt32(buffer[i], 16);
                 }
             }
 
-            AuthorizationData authData = new AuthorizationData();
-            authData.location = loc;
-            authData.code = code;
-
-
-            return authData;
+            return new AuthorizationData { location = loc, code = code }; // Return data
         }
     }
 }

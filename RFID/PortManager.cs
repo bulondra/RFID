@@ -10,17 +10,11 @@ namespace RFID
         public PortManager(Form1 instance)
         {
             _instance = instance;
-            _port = new SerialPort("COM11", 19200, Parity.None, 8, StopBits.One);
+            _port = new SerialPort("COM11", 19200, Parity.None, 8, StopBits.One); // Init serial port
         }
 
-        public void OpenPort()
-        {
-            _port.Open();
-        }
+        public void OpenPort() => _port.Open(); // Open serial port
 
-        public SerialPort GetPort()
-        {
-            return _port;
-        }
+        public SerialPort GetPort() => _port; // Get serial port
     }
 }
