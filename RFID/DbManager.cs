@@ -33,14 +33,13 @@ namespace RFID
 
         public bool GetExactAccess(string code, string place, int performationTime)
         {
-            string statement = "SELECT access_id, p.title AS place, c.code, available_from AS a_from, available_until AS a_until " +
-                               "FROM accesses " +
+            string statement = "SELECT access_id FROM accesses " +
                                "INNER JOIN codes c on accesses.code_id = c.code_id " +
                                "INNER JOIN places p on accesses.place_id = p.place_id " +
                                "WHERE code = '" + code + "' " +
-                               "AND place = '" + place + "'  " +
-                               "AND a_from <= " + performationTime + " " +
-                               "AND a_until >= " + performationTime + ";"; // Create statement
+                               "AND title = '" + place + "'  " +
+                               "AND available_from <= " + performationTime + " " +
+                               "AND available_until >= " + performationTime + ";"; // Create statement
             
             var command = new SQLiteCommand(statement, _connection); // Create command
             
