@@ -32,7 +32,7 @@ namespace RFID
             GetDbManager().Init(); // Init database
             GetDbManager().Connect(); // Connect database
 
-            GetTestManager().TestAuthorization(GetTestManager().GetTestData()[3]); // Testing
+            GetTestManager().TestAuthorization(GetTestManager().GetTestData()[4]); // Testing
 
             if (_testing) return;
             

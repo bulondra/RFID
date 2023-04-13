@@ -16,23 +16,53 @@ namespace RFID
         public void Authorize(string[] buffer)
         {
             AuthorizationData authData = DecodeCode(buffer);
+
+            bool ableToAuthorize = false;
+            var curTime = System.DateTime.Now;
+
+            ableToAuthorize = _instance.GetDbManager()
+                .GetExactAccess(authData.code, authData.location.ToString(), (curTime.Hour*60*60 + curTime.Minute * 60 + curTime.Second));
+
+            if (!ableToAuthorize)
+            {
+                try
+                {
+                    throw new AuthorizationException();
+                }
+                catch (AuthorizationException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                return;
+            }
+
             
-            CodeModel code = null;
-            code = _instance.GetDbManager().GetExactCode(authData.code);
-            if (code == null) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
-            if (!code.valid) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
-            
-            Debug.WriteLine(authData.code);
+
+            MessageBox.Show("Success");
         }
 
         public void Authorize(AuthorizationData authData)
         {
-            CodeModel code = null;
-            code = _instance.GetDbManager().GetExactCode(authData.code);
-            if (code == null) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
-            if (!code.valid) try {throw new InvalidCodeException();} catch(InvalidCodeException e) {MessageBox.Show(e.Message);}
+            bool ableToAuthorize = false;
+            var curTime = System.DateTime.Now;
 
-            Debug.WriteLine(authData.code);
+            ableToAuthorize = _instance.GetDbManager()
+                .GetExactAccess(authData.code, authData.location.ToString(), (curTime.Hour*60*60 + curTime.Minute * 60 + curTime.Second));
+            
+            if (!ableToAuthorize)
+            {
+                try
+                {
+                    throw new AuthorizationException();
+                }
+                catch (AuthorizationException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                return;
+            }
+
+            MessageBox.Show("Success");
         }
         
         public AuthorizationData DecodeCode(string[] buffer)

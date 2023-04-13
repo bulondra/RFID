@@ -30,6 +30,23 @@ namespace RFID
 
             return reader.Read() ? new CodeModel { code_id = reader.GetInt32(0), code = reader.GetString(1), valid = reader.GetBoolean(2) } : null; // Return CodeModel or null
         }
+
+        public bool GetExactAccess(string code, string place, int performationTime)
+        {
+            string statement = "SELECT * FROM accesses " +
+                               "INNER JOIN codes c on accesses.code_id = c.code_id " +
+                               "INNER JOIN places p on accesses.place_id = p.place_id " +
+                               "WHERE code = '" + code + "' " +
+                               "AND title = '" + place + "'  " +
+                               "AND available_from <= " + performationTime + " " +
+                               "AND available_until >= " + performationTime + ";"; // Create statement
+            
+            var command = new SQLiteCommand(statement, _connection); // Create command
+            
+            SQLiteDataReader reader = command.ExecuteReader(); // Create reader
+
+            return reader.Read();
+        }
         
     }
 }

@@ -8,6 +8,7 @@
             new AuthorizationData {code = "57192BFA", location = Location.CTECKA},
             new AuthorizationData {code = "A56B691A", location = Location.CTECKA},
             new AuthorizationData {code = "B7924124", location = Location.CTECKA},
+            new AuthorizationData {code = "B7924124", location = Location.CTECKA_CISELNIKU},
             new AuthorizationData {code = "2BFF628A", location = Location.CTECKA},
         };
 
