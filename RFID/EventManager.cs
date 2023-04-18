@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace RFID
 {
@@ -36,6 +37,14 @@ namespace RFID
             if (buffer.Length > 0) _instance.GetAuthManager().Authorize(buffer); // If buffer contains data -> perform authorization
             
             _instance.ResumeTimer(); // Resume main cycle
+        }
+
+        public void Button_Click(object sender, EventArgs e)
+        {
+            string code = _instance.GetTextbox1Text();
+            string loc = _instance.GetTextbox2Text();
+            Location.TryParse(loc, out Location loca);
+            _instance.GetTestManager().TestAuthorization(new AuthorizationData{code = code, location = loca});
         }
     }
 }
