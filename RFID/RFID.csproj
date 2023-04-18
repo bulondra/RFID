@@ -90,10 +90,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessModel.cs" />
+    <Compile Include="Administration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration.Designer.cs">
+      <DependentUpon>Administration.cs</DependentUpon>
+    </Compile>
     <Compile Include="AuthManager.cs" />
     <Compile Include="AuthorizationData.cs" />
     <Compile Include="AuthorizationException.cs" />
     <Compile Include="CodeModel.cs" />
+    <Compile Include="DbLogModel.cs" />
     <Compile Include="DbManager.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="Form1.cs">
@@ -111,6 +118,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestManager.cs" />
     <Compile Include="UserModel.cs" />
+    <EmbeddedResource Include="Administration.resx">
+      <DependentUpon>Administration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,8 +132,27 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AccessModel.datasource" />
+    <None Include="Properties\DataSources\Administration.datasource" />
+    <None Include="Properties\DataSources\AuthManager.datasource" />
+    <None Include="Properties\DataSources\AuthorizationData.datasource" />
+    <None Include="Properties\DataSources\AuthorizationException.datasource" />
+    <None Include="Properties\DataSources\CodeModel.datasource" />
+    <None Include="Properties\DataSources\DbLogModel.datasource" />
+    <None Include="Properties\DataSources\DbManager.datasource" />
+    <None Include="Properties\DataSources\EventManager.datasource" />
+    <None Include="Properties\DataSources\Form1.datasource" />
+    <None Include="Properties\DataSources\InvalidCodeException.datasource" />
+    <None Include="Properties\DataSources\PlaceModel.datasource" />
+    <None Include="Properties\DataSources\PortManager.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\RFID.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\RFID.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\TestManager.datasource" />
+    <None Include="Properties\DataSources\UserModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -138,7 +167,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\users-group.png" />
     <Content Include="rfid.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
