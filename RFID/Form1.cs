@@ -1,4 +1,6 @@
-﻿using System.Timers;
+﻿using System;
+using System.Drawing;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace RFID
@@ -12,6 +14,7 @@ namespace RFID
         private DbManager _dbManager;
         private TestManager _testManager;
         private System.Timers.Timer mainCycle;
+        private Button _button;
         private bool _testing;
 
         public Form1()
@@ -23,7 +26,7 @@ namespace RFID
             _dbManager = new DbManager(this);
             _testManager = new TestManager(this);
 
-            _testing = true; // Testing variable
+            _testing = false; // Testing variable
 
             InitializeComponent();
 
@@ -32,8 +35,24 @@ namespace RFID
             GetDbManager().Init(); // Init database
             GetDbManager().Connect(); // Connect database
 
-            GetTestManager().TestAuthorization(GetTestManager().GetTestData()[4]); // Testing
+            if (_testing)
+            {
+                _button = new Button();
+                _button.Name = "Button";
+                _button.Text = "Button";
+                _button.Location = new Point(10, 70);
+                _button.Size = new Size(200, 100);
+                _button.Font = new Font(FontFamily.GenericSansSerif, 20.25F);
+                _button.Click += new EventHandler(GetEventManager().Button_Click);
+                Controls.Add(_button);
 
+                textBox1.Visible = true;
+                textBox2.Visible = true;
+            }
+
+            Administration adminForm = new Administration(this);
+            adminForm.Show();
+            
             if (_testing) return;
             
             // Initialize & start main cycle
@@ -49,6 +68,8 @@ namespace RFID
         public PortManager GetPortManager() => _portManager;
         public DbManager GetDbManager() => _dbManager;
         public TestManager GetTestManager() => _testManager;
+        public string GetTextbox1Text() => textBox1.Text;
+        public string GetTextbox2Text() => textBox2.Text;
         
         
         public void PauseTimer() => mainCycle.Stop(); // Pause main cycle
