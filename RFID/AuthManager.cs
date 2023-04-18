@@ -19,6 +19,7 @@ namespace RFID
 
             bool ableToAuthorize = false;
             var curTime = System.DateTime.Now;
+            var starTime = new System.DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
             ableToAuthorize = _instance.GetDbManager()
                 .GetExactAccess(authData.code, authData.location.ToString(), (curTime.Hour*60*60 + curTime.Minute * 60 + curTime.Second));
@@ -33,18 +34,19 @@ namespace RFID
                 {
                     MessageBox.Show(e.Message);
                 }
+                _instance.GetDbManager().LogAction(authData.code, authData.location.ToString(), LogType.UNSUCCESSFUL_ACCESS, (long) (DateTime.UtcNow - starTime).TotalMilliseconds);
                 return;
             }
 
-            
-
             MessageBox.Show("Success");
+            _instance.GetDbManager().LogAction(authData.code, authData.location.ToString(), LogType.SUCCESSFUL_ACCESS, (long) (DateTime.UtcNow - starTime).TotalMilliseconds);
         }
 
         public void Authorize(AuthorizationData authData)
         {
             bool ableToAuthorize = false;
             var curTime = System.DateTime.Now;
+            var starTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
             ableToAuthorize = _instance.GetDbManager()
                 .GetExactAccess(authData.code, authData.location.ToString(), (curTime.Hour*60*60 + curTime.Minute * 60 + curTime.Second));
@@ -59,10 +61,12 @@ namespace RFID
                 {
                     MessageBox.Show(e.Message);
                 }
+                _instance.GetDbManager().LogAction(authData.code, authData.location.ToString(), LogType.UNSUCCESSFUL_ACCESS, (long) (DateTime.UtcNow - starTime).TotalMilliseconds);
                 return;
             }
 
             MessageBox.Show("Success");
+            _instance.GetDbManager().LogAction(authData.code, authData.location.ToString(), LogType.SUCCESSFUL_ACCESS, (long) (DateTime.UtcNow - starTime).TotalMilliseconds);
         }
         
         public AuthorizationData DecodeCode(string[] buffer)
@@ -95,7 +99,14 @@ namespace RFID
                 
                 for (int i = 1; i < 9; i++) // Parse code from packet
                 {
-                    code += (char)Convert.ToUInt32(buffer[i], 16);
+                    try
+                    {
+                        code += (char)Convert.ToUInt32(buffer[i], 16);
+                    } catch(IndexOutOfRangeException e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                    
                 }
             }
 
