@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace RFID
 {
@@ -29,6 +30,46 @@ namespace RFID
             SQLiteDataReader reader = command.ExecuteReader(); // Create reader
 
             return reader.Read() ? new CodeModel { code_id = reader.GetInt32(0), code = reader.GetString(1), valid = reader.GetBoolean(2) } : null; // Return CodeModel or null
+        }
+
+        public void LogAction(string code, string place, LogType logType, long time)
+        {
+            string statement = "INSERT INTO logs " +
+                "(code, place, action, created_at) VALUES " +
+                "('" + code + "', '" + place +
+                "', '" + logType.ToString() + "', " + time + ");"; // Create statement
+
+            var command = new SQLiteCommand(statement, _connection); // Create command
+
+            command.ExecuteNonQuery(); // Perform command
+        }
+
+        public int GetUsersCount()
+        {
+            string statement = "SELECT COUNT(*) FROM users;"; // Create statement
+
+            var command = new SQLiteCommand(statement, _connection); // Create command
+
+            SQLiteDataReader reader = command.ExecuteReader(); // Create reader
+
+            return reader.Read() ? reader.GetInt32(0) : 0;
+        }
+
+        public List<DbLogModel> GetLogs()
+        {
+            List<DbLogModel> logList = new List<DbLogModel>();
+            string statement = "SELECT * FROM logs;"; // Create statement
+
+            var command = new SQLiteCommand(statement, _connection); // Create command
+
+            SQLiteDataReader reader = command.ExecuteReader(); // Create reader
+
+            while (reader.Read())
+            {
+                logList.Add(new DbLogModel { log_id = reader.GetInt32(0), code = reader.GetString(1), place = reader.GetString(2), action = reader.GetString(3), created_at = reader.GetInt64(4) });
+            }
+
+            return logList;
         }
 
         public bool GetExactAccess(string code, string place, int performationTime)
